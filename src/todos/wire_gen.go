@@ -45,16 +45,10 @@ func InitializeApp(enver config.Enver, logger *log.Logger) (*App, error) {
 	if err != nil {
 		return nil, err
 	}
-	userserviceConfig, err := userservice.NewConfig(enver)
-	if err != nil {
-		return nil, err
-	}
+	userserviceConfig := userservice.NewConfig(enver)
 	repo := userrepo.New(db)
 	service := userservice.New(userserviceConfig, repo)
-	todoserviceConfig, err := todoservice.NewConfig(enver)
-	if err != nil {
-		return nil, err
-	}
+	todoserviceConfig := todoservice.NewConfig(enver)
 	todorepoRepo := todorepo.New(db)
 	todoserviceService := todoservice.New(todoserviceConfig, todorepoRepo)
 	apiAPI := api.New(apiConfig, apm, logger, service, todoserviceService)

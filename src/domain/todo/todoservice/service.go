@@ -15,8 +15,10 @@ type Config struct {
 	BadWords []string
 }
 
-func NewConfig(enver config.Enver) (Config, error) {
-	return Config{}, nil
+func NewConfig(enver config.Enver) Config {
+	c := Config{}
+	c.BadWords = config.StringSlice(enver, "BLOGWIRE_TODO_BAD_WORDS")
+	return c
 }
 
 type Service struct {
@@ -42,7 +44,7 @@ func (s *Service) Add(createdBy user.User, text string) (*todo.Todo, error) {
 		return nil, err
 	}
 
-	// TODO check for text contains bad words
+	// If this were real, check for text contains bad words
 
 	todo := &todo.Todo{
 		ID:        id,
@@ -59,7 +61,7 @@ func (s *Service) Set(id uuid.UUID, text string) (*todo.Todo, error) {
 		return nil, err
 	}
 
-	// TODO check for text contains bad words
+	// If this were real, check for text contains bad words
 
 	todo.Text = text
 	todo.UpdatedAt = time.Now()

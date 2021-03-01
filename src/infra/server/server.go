@@ -12,11 +12,14 @@ type Config struct {
 }
 
 func NewConfig(enver config.Enver) (Config, error) {
-	// TODO
+	var err error
+	c := Config{}
 
-	return Config{
-		ListenAddress: ":0",
-	}, nil
+	if c.ListenAddress, err = config.RequiredString(enver, "BLOGWIRE_SERVER_LISTEN_ADDRESS"); err != nil {
+		return Config{}, err
+	}
+
+	return c, nil
 }
 
 type Server struct {

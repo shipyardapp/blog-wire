@@ -12,9 +12,10 @@ type Config struct {
 	AllowedEmailDomains []string
 }
 
-func NewConfig(enver config.Enver) (Config, error) {
-	// TODO
-	return Config{}, nil
+func NewConfig(enver config.Enver) Config {
+	c := Config{}
+	c.AllowedEmailDomains = config.StringSlice(enver, "BLOGWIRE_ALLOWED_EMAIL_DOMAINS")
+	return c
 }
 
 type Service struct {
@@ -40,7 +41,7 @@ func (s *Service) Add(email string) (*user.User, error) {
 		return nil, err
 	}
 
-	// TODO check email for valid domain.
+	// If this were real, check email for valid domain.
 
 	u := &user.User{
 		ID:    id,

@@ -12,9 +12,14 @@ type Config struct {
 }
 
 func NewConfig(enver config.Enver) (Config, error) {
-	// TODO
+	c := Config{}
+	var err error
 
-	return Config{}, nil
+	if c.DataSourceName, err = config.RequiredString(enver, "BLOGWIRE_DB_DATA_SOURCE_NAME"); err != nil {
+		return Config{}, err
+	}
+
+	return c, nil
 }
 
 func New(config Config) (*sql.DB, error) {

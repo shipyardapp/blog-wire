@@ -7,8 +7,14 @@ type Config struct {
 }
 
 func NewConfig(enver config.Enver) (Config, error) {
-	// TODO
-	return Config{}, nil
+	var err error
+	c := Config{}
+
+	if c.ServiceCaptureEndpoint, err = config.RequiredString(enver, "BLOGWIRE_APM_CAPTURE_ENDPOINT"); err != nil {
+		return Config{}, err
+	}
+
+	return c, nil
 }
 
 type APM struct {
@@ -17,7 +23,7 @@ type APM struct {
 
 func New(config Config) (*APM, error) {
 	return &APM{
-		// someClient from config.ServiceCaptureEndpoint.
+		// someClient using config.ServiceCaptureEndpoint.
 	}, nil
 }
 
