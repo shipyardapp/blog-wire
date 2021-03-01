@@ -2,6 +2,7 @@ package config
 
 import (
 	"encoding/base64"
+	"fmt"
 	"strings"
 )
 
@@ -55,5 +56,5 @@ func NewEnverError(key, type_, reason string) *EnverError {
 }
 
 func (e *EnverError) Error() string {
-	return ""
+	return fmt.Sprintf("config: unable to parse key %s into %s: %s", e.Key, e.Type, e.Reason)
 }
