@@ -16,7 +16,7 @@ func main() {
 	ctx, stop := signal.NotifyContext(context.Background(), syscall.SIGINT, syscall.SIGTERM)
 	defer stop()
 
-	app, err := todos.InitializeApp(os.Getenv, log.Default())
+	app, err := todos.New(os.Getenv, log.Default())
 	if err != nil {
 		exit(err, 1)
 	}
@@ -27,7 +27,6 @@ func main() {
 	if err != nil {
 		exitCode = 2
 	}
-	stop()
 
 	if errClose := app.Close(); errClose != nil {
 		err = multierror.Append(err, errClose)

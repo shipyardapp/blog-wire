@@ -6,8 +6,6 @@ import (
 	"github.com/shipyardapp/blog-wire/src/domain/user"
 )
 
-var _ user.Service = &Service{}
-
 type Config struct {
 	AllowedEmailDomains []string
 }
@@ -18,12 +16,16 @@ func NewConfig(enver config.Enver) Config {
 	return c
 }
 
+// Service is the todo.Service implementation.
+// We have this type in a separate package so that we can have the interface
+// and this type without any name games.
 type Service struct {
 	config Config
 
 	users user.Repo
 }
 
+// New creates and returns a new Service.
 func New(config Config, users user.Repo) *Service {
 	return &Service{
 		config: config,

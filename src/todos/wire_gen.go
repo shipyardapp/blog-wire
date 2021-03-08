@@ -20,7 +20,9 @@ import (
 
 // Injectors from wire.go:
 
-func InitializeApp(enver config.Enver, logger *log.Logger) (*App, error) {
+// InitializeApp is the App injector.
+// Note that we still have the New function in this package to provide an App.
+func New(enver config.Enver, logger *log.Logger) (*App, error) {
 	sqldbConfig, err := sqldb.NewConfig(enver)
 	if err != nil {
 		return nil, err
@@ -53,6 +55,6 @@ func InitializeApp(enver config.Enver, logger *log.Logger) (*App, error) {
 	todoserviceService := todoservice.New(todoserviceConfig, todorepoRepo)
 	apiAPI := api.New(apiConfig, apm, logger, service, todoserviceService)
 	serverServer := server.New(serverConfig, apiAPI)
-	app := New(db, apm, serverServer)
+	app := newApp(db, apm, serverServer)
 	return app, nil
 }
